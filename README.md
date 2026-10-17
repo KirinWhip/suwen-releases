@@ -5,6 +5,5 @@
 - `latest-cdn.json`：软件更新清单（国内镜像用）
 - `model-catalog.json`：模型价格表
 - `mcp-market.json`：插件市场列表
-- `installers/`：安装包
 
-安装包在右边的 Releases 里下载。
+安装包在右边的 **Releases** 里下载（下载 `Suwen_版本号_x64-setup.exe`，双击安装）。
