@@ -5,7 +5,7 @@
     "platforms":  {
                       "windows-x86_64":  {
                                              "signature":  "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVUZGxFeVlZUGFnZld0d0hxSWFNSm12UVR6RFo4MVdnRlRETEJ5cllqVE5rcjIvMWFGUG5hOXpXMXNMK3h4Q1JjVzN5ZzdTSkNrYms2MXVpU0U5cVFGOFpaanNEb29qTFFZPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkyMjQzMTYzCWZpbGU657Sg6ZeuXzEuMS4wX3g2NC1zZXR1cC5leGUJdmVyc2lvbjoxLjEuMApMeDJUbnB6aEJPQnVRdjNsVzhQWFd1VUgwZ1QwdThwbW1MbVlDQXh0eC9aeU53NGVsYkZlUEtkbE5kRUpYYk5NVnFkanhUSkk1emswOGprcU01dlNEUT09Cg==",
-                                             "url":  "https://cdn.jsdelivr.net/gh/KirinWhip/suwen-releases@main/installers/Suwen_1.1.0_x64-setup.exe"
+                                             "url":  "https://github.com/KirinWhip/suwen-releases/releases/download/v1.1.0/Suwen_1.1.0_x64-setup.exe"
                                          }
                   }
 }
