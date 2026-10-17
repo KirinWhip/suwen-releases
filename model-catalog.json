@@ -1,0 +1,1000 @@
+{
+ "$comment": "素问 模型资料库（价格 + 能力）。2026-10-17 从各家官网抓取。价格单位：每百万 tokens，币种见 currency。verified=false 的是第三方数据，界面上标「参考价」。软件内置一份，『检查更新』时从线上拉新版覆盖。",
+ "schemaVersion": 1,
+ "updated": "2026-10-17",
+ "usdToCny": 6.8,
+ "usdToCnyNote": "美联储 H.10 2026-06 约 6.76–6.80；用户可在设置里改",
+ "providers": {
+  "deepseek": {
+   "source": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing",
+   "peakHours": {
+    "tz": "Asia/Shanghai",
+    "weekdays": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    "excludeCnHolidays": true,
+    "ranges": [
+     [
+      "09:00",
+      "12:00"
+     ],
+     [
+      "14:00",
+      "18:00"
+     ]
+    ]
+   },
+   "note": "高峰时段用 price，其余时段（闲时）用 offPeakPrice，闲时是高峰的一半"
+  },
+  "anthropic": {
+   "source": "Anthropic 官方模型表（2026-10-06）",
+   "cacheWriteMultiplier": 1.25,
+   "note": "缓存写入（5 分钟）按输入价 ×1.25 计；Anthropic 的 input_tokens 不含缓存部分，要把 cache_read / cache_creation 分开算。2026-10-17 施工时按官方价格页核对：Sonnet 5.5 命中价 $0.10、Haiku 5.5 命中价 $0.01 / $0.05"
+  },
+  "openai": {
+   "source": "https://developers.openai.com/api/docs/pricing",
+   "note": "以下为 Standard 档、输入 ≤27.2万 tokens 的价格；更长上下文另有高价档，施工时去官网补全"
+  },
+  "gemini": {
+   "source": "https://ai.google.dev/gemini-api/docs/pricing",
+   "note": "输出价含思考 tokens；显式缓存另收存储费，素问只用隐式缓存，不计存储费"
+  },
+  "kimi": {
+   "source": "https://platform.kimi.com/docs/pricing/chat"
+  },
+  "zhipu": {
+   "source": "https://docs.bigmodel.cn/cn/guide/start/pricing"
+  },
+  "qwen": {
+   "source": "https://help.aliyun.com/zh/model-studio/model-pricing",
+   "note": "按单次请求的输入 tokens 总量选档，整次请求都按该档计价；隐式缓存命中价官网本页未写明，cachedInput 暂留空（按未命中价计，会略高估）"
+  },
+  "doubao": {
+   "source": "第三方（datalearner.com），火山方舟官网价格页是动态加载、未能抓到",
+   "note": "全部 verified=false，施工 AI 或用户到 console.volcengine.com/ark 核实后改为 true"
+  },
+  "openrouter": {
+   "source": "GET https://openrouter.ai/api/v1/models 的 pricing 字段（美元/每 token，要 ×1e6）",
+   "note": "不写死在本文件；每次「从服务商获取模型」时一并读取价格"
+  },
+  "siliconflow": {
+   "note": "本次未收集，模型太多；用户可手填，或下次更新价格表时补"
+  }
+ },
+ "models": [
+  {
+   "provider": "deepseek",
+   "model": "deepseek-flash",
+   "name": "DeepSeek Flash (V4.1)",
+   "currency": "CNY",
+   "context": 1000000,
+   "maxOutput": 384000,
+   "caps": {
+    "reasoning": true,
+    "thinkingToggle": true,
+    "tools": true
+   },
+   "price": {
+    "input": 2,
+    "cachedInput": 0.04,
+    "output": 8
+   },
+   "offPeakPrice": {
+    "input": 1,
+    "cachedInput": 0.02,
+    "output": 4
+   },
+   "verified": true
+  },
+  {
+   "provider": "deepseek",
+   "model": "deepseek-v4-pro",
+   "name": "DeepSeek V4 Pro",
+   "currency": "CNY",
+   "context": 1000000,
+   "maxOutput": 384000,
+   "caps": {
+    "reasoning": true,
+    "thinkingToggle": true,
+    "tools": true
+   },
+   "price": {
+    "input": 9,
+    "cachedInput": 0.3,
+    "output": 27
+   },
+   "offPeakPrice": {
+    "input": 4.5,
+    "cachedInput": 0.15,
+    "output": 13.5
+   },
+   "verified": true
+  },
+  {
+   "provider": "anthropic",
+   "model": "claude-fable-5-1",
+   "name": "Claude Fable 5.1",
+   "currency": "USD",
+   "context": 1000000,
+   "maxOutput": 128000,
+   "caps": {
+    "vision": true,
+    "pdf": true,
+    "reasoning": true,
+    "tools": true
+   },
+   "effort": {
+    "param": "output_config.effort",
+    "levels": [
+     "low",
+     "medium",
+     "high",
+     "xhigh",
+     "max"
+    ],
+    "default": "high",
+    "canDisableThinking": false
+   },
+   "price": {
+    "input": 10,
+    "cachedInput": 0.25,
+    "output": 50
+   },
+   "verified": true
+  },
+  {
+   "provider": "anthropic",
+   "model": "claude-opus-5-5",
+   "name": "Claude Opus 5.5",
+   "currency": "USD",
+   "context": 1000000,
+   "maxOutput": 128000,
+   "caps": {
+    "vision": true,
+    "pdf": true,
+    "reasoning": true,
+    "tools": true
+   },
+   "effort": {
+    "param": "output_config.effort",
+    "levels": [
+     "low",
+     "medium",
+     "high",
+     "xhigh",
+     "max"
+    ],
+    "default": "medium",
+    "canDisableThinking": false
+   },
+   "price": {
+    "input": 4,
+    "cachedInput": 0.2,
+    "output": 20
+   },
+   "verified": true
+  },
+  {
+   "provider": "anthropic",
+   "model": "claude-sonnet-5-5",
+   "name": "Claude Sonnet 5.5",
+   "currency": "USD",
+   "context": 1000000,
+   "maxOutput": 128000,
+   "caps": {
+    "vision": true,
+    "pdf": true,
+    "reasoning": true,
+    "thinkingToggle": true,
+    "tools": true
+   },
+   "effort": {
+    "param": "output_config.effort",
+    "levels": [
+     "low",
+     "medium",
+     "high",
+     "xhigh",
+     "max"
+    ],
+    "default": "high",
+    "canDisableThinking": true,
+    "disableNote": "关思考发 thinking:{type:\"between_tools\"}，且只能配 high 及以下强度"
+   },
+   "price": {
+    "input": 2,
+    "cachedInput": 0.1,
+    "output": 10
+   },
+   "verified": true
+  },
+  {
+   "provider": "anthropic",
+   "model": "claude-haiku-5-5",
+   "name": "Claude Haiku 5.5",
+   "currency": "USD",
+   "context": 1000000,
+   "maxOutput": 128000,
+   "caps": {
+    "vision": true,
+    "pdf": true,
+    "reasoning": true,
+    "thinkingToggle": true,
+    "tools": true
+   },
+   "effort": {
+    "param": "output_config.effort",
+    "levels": [
+     "low",
+     "medium",
+     "high",
+     "xhigh",
+     "max"
+    ],
+    "default": "medium",
+    "canDisableThinking": true,
+    "disableNote": "关思考发 thinking:{type:\"disabled\"}，只能配 high 及以下强度"
+   },
+   "tiers": [
+    {
+     "maxInput": 100000,
+     "input": 0.1,
+     "cachedInput": 0.01,
+     "output": 0.5
+    },
+    {
+     "maxInput": null,
+     "input": 0.5,
+     "cachedInput": 0.05,
+     "output": 2.5
+    }
+   ],
+   "verified": true
+  },
+  {
+   "provider": "openai",
+   "model": "gpt-6-astra",
+   "name": "GPT-6 Astra",
+   "currency": "USD",
+   "price": {
+    "input": 10,
+    "cachedInput": 1,
+    "output": 50
+   },
+   "verified": true
+  },
+  {
+   "provider": "openai",
+   "model": "gpt-6.1-sol",
+   "name": "GPT-6.1 Sol",
+   "currency": "USD",
+   "price": {
+    "input": 2,
+    "cachedInput": 0.1,
+    "output": 10
+   },
+   "verified": true
+  },
+  {
+   "provider": "openai",
+   "model": "gpt-6-sol",
+   "name": "GPT-6 Sol",
+   "currency": "USD",
+   "price": {
+    "input": 2,
+    "cachedInput": 0.2,
+    "output": 10
+   },
+   "verified": true
+  },
+  {
+   "provider": "openai",
+   "model": "gpt-6-luna",
+   "name": "GPT-6 Luna",
+   "currency": "USD",
+   "price": {
+    "input": 0.1,
+    "cachedInput": 0.01,
+    "output": 0.5
+   },
+   "verified": true
+  },
+  {
+   "provider": "openai",
+   "model": "gpt-5.6-sol",
+   "name": "GPT-5.6 Sol",
+   "currency": "USD",
+   "price": {
+    "input": 4,
+    "cachedInput": 0.4,
+    "output": 20
+   },
+   "verified": true
+  },
+  {
+   "provider": "openai",
+   "model": "gpt-5.6-terra",
+   "name": "GPT-5.6 Terra",
+   "currency": "USD",
+   "price": {
+    "input": 2,
+    "cachedInput": 0.2,
+    "output": 12
+   },
+   "verified": true
+  },
+  {
+   "provider": "openai",
+   "model": "gpt-5.6-luna",
+   "name": "GPT-5.6 Luna",
+   "currency": "USD",
+   "price": {
+    "input": 0.2,
+    "cachedInput": 0.02,
+    "output": 1.2
+   },
+   "verified": true
+  },
+  {
+   "provider": "openai",
+   "model": "gpt-5.5",
+   "name": "GPT-5.5",
+   "currency": "USD",
+   "price": {
+    "input": 5,
+    "cachedInput": 0.5,
+    "output": 30
+   },
+   "verified": true
+  },
+  {
+   "provider": "openai",
+   "model": "gpt-5.4-mini",
+   "name": "GPT-5.4 mini",
+   "currency": "USD",
+   "price": {
+    "input": 0.75,
+    "cachedInput": 0.075,
+    "output": 4.5
+   },
+   "verified": true
+  },
+  {
+   "provider": "openai",
+   "model": "gpt-5.4-nano",
+   "name": "GPT-5.4 nano",
+   "currency": "USD",
+   "price": {
+    "input": 0.2,
+    "cachedInput": 0.02,
+    "output": 1.25
+   },
+   "verified": true
+  },
+  {
+   "provider": "openai",
+   "model": "gpt-image-2",
+   "name": "GPT Image 2",
+   "currency": "USD",
+   "caps": {
+    "imageGen": true,
+    "vision": true
+   },
+   "price": {
+    "input": 5,
+    "cachedInput": 1.25,
+    "imageInput": 8,
+    "imageOutput": 30
+   },
+   "note": "文字输入 $5、图片输入 $8、图片输出 $30（每百万 tokens）",
+   "verified": true
+  },
+  {
+   "provider": "openai",
+   "model": "gpt-image-1-mini",
+   "name": "GPT Image 1 mini",
+   "currency": "USD",
+   "caps": {
+    "imageGen": true,
+    "vision": true
+   },
+   "price": {
+    "input": 2,
+    "cachedInput": 0.2,
+    "imageInput": 2.5,
+    "imageOutput": 8
+   },
+   "verified": true
+  },
+  {
+   "provider": "gemini",
+   "model": "gemini-3.8-flash",
+   "name": "Gemini 3.8 Flash",
+   "currency": "USD",
+   "caps": {
+    "vision": true,
+    "pdf": true,
+    "reasoning": true,
+    "tools": true
+   },
+   "price": {
+    "input": 0.75,
+    "cachedInput": 0.075,
+    "output": 3.75
+   },
+   "priceFrom": {
+    "2027-01-01": {
+     "input": 1.5,
+     "cachedInput": 0.15,
+     "output": 7.5
+    }
+   },
+   "verified": true
+  },
+  {
+   "provider": "gemini",
+   "model": "gemini-3.6-flash",
+   "name": "Gemini 3.6 Flash",
+   "currency": "USD",
+   "caps": {
+    "vision": true,
+    "pdf": true,
+    "reasoning": true,
+    "tools": true
+   },
+   "price": {
+    "input": 0.75,
+    "cachedInput": 0.075,
+    "output": 3.75
+   },
+   "priceFrom": {
+    "2027-01-01": {
+     "input": 1.5,
+     "cachedInput": 0.15,
+     "output": 7.5
+    }
+   },
+   "verified": true
+  },
+  {
+   "provider": "gemini",
+   "model": "gemini-3.1-pro-preview",
+   "name": "Gemini 3.1 Pro",
+   "currency": "USD",
+   "caps": {
+    "vision": true,
+    "pdf": true,
+    "reasoning": true,
+    "tools": true
+   },
+   "tiers": [
+    {
+     "maxInput": 200000,
+     "input": 2,
+     "cachedInput": 0.2,
+     "output": 12
+    },
+    {
+     "maxInput": null,
+     "input": 4,
+     "cachedInput": 0.4,
+     "output": 18
+    }
+   ],
+   "verified": true
+  },
+  {
+   "provider": "gemini",
+   "model": "gemini-3.5-flash-lite",
+   "name": "Gemini 3.5 Flash-Lite",
+   "currency": "USD",
+   "price": {
+    "input": 0.3,
+    "cachedInput": 0.03,
+    "output": 2.5
+   },
+   "verified": true
+  },
+  {
+   "provider": "gemini",
+   "model": "gemini-3.1-flash-lite",
+   "name": "Gemini 3.1 Flash-Lite",
+   "currency": "USD",
+   "price": {
+    "input": 0.25,
+    "cachedInput": 0.025,
+    "output": 1.5
+   },
+   "verified": true
+  },
+  {
+   "provider": "gemini",
+   "model": "gemini-2.5-pro",
+   "name": "Gemini 2.5 Pro",
+   "currency": "USD",
+   "tiers": [
+    {
+     "maxInput": 200000,
+     "input": 1.25,
+     "cachedInput": 0.125,
+     "output": 10
+    },
+    {
+     "maxInput": null,
+     "input": 2.5,
+     "cachedInput": 0.25,
+     "output": 15
+    }
+   ],
+   "verified": true
+  },
+  {
+   "provider": "gemini",
+   "model": "gemini-2.5-flash",
+   "name": "Gemini 2.5 Flash",
+   "currency": "USD",
+   "price": {
+    "input": 0.3,
+    "cachedInput": 0.03,
+    "output": 2.5
+   },
+   "verified": true
+  },
+  {
+   "provider": "gemini",
+   "model": "gemini-nano-banana-2.1",
+   "name": "Nano Banana 2.1（画图）",
+   "currency": "USD",
+   "caps": {
+    "imageGen": true,
+    "vision": true
+   },
+   "perImage": {
+    "1K": 0.0336,
+    "2K": 0.0504,
+    "4K": 0.113
+   },
+   "verified": true
+  },
+  {
+   "provider": "gemini",
+   "model": "gemini-3.1-flash-image",
+   "name": "Gemini 3.1 Flash Image（画图）",
+   "currency": "USD",
+   "caps": {
+    "imageGen": true,
+    "vision": true
+   },
+   "perImage": {
+    "0.5K": 0.045,
+    "1K": 0.067,
+    "2K": 0.101,
+    "4K": 0.151
+   },
+   "verified": true
+  },
+  {
+   "provider": "gemini",
+   "model": "gemini-3-pro-image",
+   "name": "Gemini 3 Pro Image（画图）",
+   "currency": "USD",
+   "caps": {
+    "imageGen": true,
+    "vision": true
+   },
+   "perImage": {
+    "1K": 0.134,
+    "2K": 0.134,
+    "4K": 0.24
+   },
+   "verified": true
+  },
+  {
+   "provider": "gemini",
+   "model": "gemini-2.5-flash-image",
+   "name": "Gemini 2.5 Flash Image",
+   "currency": "USD",
+   "retired": "2026-10-02",
+   "note": "已于 2026-10-02 停用；如果用户的模型列表里还有它，提示换成 Nano Banana 2.1",
+   "verified": true
+  },
+  {
+   "provider": "kimi",
+   "model": "kimi-k3",
+   "name": "Kimi K3",
+   "currency": "CNY",
+   "context": 1048576,
+   "price": {
+    "input": 20,
+    "cachedInput": 2,
+    "output": 100
+   },
+   "verified": true
+  },
+  {
+   "provider": "kimi",
+   "model": "kimi-k2.7-code",
+   "name": "Kimi K2.7 Code",
+   "currency": "CNY",
+   "context": 262144,
+   "price": {
+    "input": 6.5,
+    "cachedInput": 1.3,
+    "output": 27
+   },
+   "verified": true
+  },
+  {
+   "provider": "kimi",
+   "model": "kimi-k2.7-code-highspeed",
+   "name": "Kimi K2.7 Code 高速版",
+   "currency": "CNY",
+   "context": 262144,
+   "price": {
+    "input": 13,
+    "cachedInput": 2.6,
+    "output": 54
+   },
+   "verified": true
+  },
+  {
+   "provider": "kimi",
+   "model": "kimi-k2.6",
+   "name": "Kimi K2.6",
+   "currency": "CNY",
+   "context": 262144,
+   "price": {
+    "input": 6.5,
+    "cachedInput": 1.1,
+    "output": 27
+   },
+   "verified": true
+  },
+  {
+   "provider": "zhipu",
+   "model": "glm-5.3",
+   "name": "GLM-5.3",
+   "currency": "CNY",
+   "context": 1000000,
+   "price": {
+    "input": 8,
+    "cachedInput": 2,
+    "output": 28
+   },
+   "verified": true
+  },
+  {
+   "provider": "zhipu",
+   "model": "glm-5.3-flashx",
+   "name": "GLM-5.3-FlashX",
+   "currency": "CNY",
+   "context": 1000000,
+   "price": {
+    "input": 2,
+    "cachedInput": 0.57,
+    "output": 7
+   },
+   "verified": true
+  },
+  {
+   "provider": "zhipu",
+   "model": "glm-5.3-flash",
+   "name": "GLM-5.3-Flash",
+   "currency": "CNY",
+   "context": 1000000,
+   "price": {
+    "input": 0.8,
+    "cachedInput": 0.23,
+    "output": 2.8
+   },
+   "verified": true
+  },
+  {
+   "provider": "zhipu",
+   "model": "glm-5.2",
+   "name": "GLM-5.2",
+   "currency": "CNY",
+   "context": 1000000,
+   "price": {
+    "input": 8,
+    "cachedInput": 2,
+    "output": 28
+   },
+   "verified": true
+  },
+  {
+   "provider": "zhipu",
+   "model": "glm-5.1",
+   "name": "GLM-5.1",
+   "currency": "CNY",
+   "tiers": [
+    {
+     "maxInput": 32000,
+     "input": 6,
+     "cachedInput": 1.3,
+     "output": 24
+    },
+    {
+     "maxInput": null,
+     "input": 8,
+     "cachedInput": 2,
+     "output": 28
+    }
+   ],
+   "verified": true
+  },
+  {
+   "provider": "zhipu",
+   "model": "glm-5-turbo",
+   "name": "GLM-5-Turbo",
+   "currency": "CNY",
+   "tiers": [
+    {
+     "maxInput": 32000,
+     "input": 5,
+     "cachedInput": 1.2,
+     "output": 22
+    },
+    {
+     "maxInput": null,
+     "input": 7,
+     "cachedInput": 1.8,
+     "output": 26
+    }
+   ],
+   "verified": true
+  },
+  {
+   "provider": "zhipu",
+   "model": "glm-5",
+   "name": "GLM-5",
+   "currency": "CNY",
+   "tiers": [
+    {
+     "maxInput": 32000,
+     "input": 4,
+     "cachedInput": 1,
+     "output": 18
+    },
+    {
+     "maxInput": null,
+     "input": 6,
+     "cachedInput": 1.5,
+     "output": 22
+    }
+   ],
+   "verified": true
+  },
+  {
+   "provider": "zhipu",
+   "model": "glm-4.7-flashx",
+   "name": "GLM-4.7-FlashX",
+   "currency": "CNY",
+   "context": 200000,
+   "price": {
+    "input": 0.5,
+    "cachedInput": 0.1,
+    "output": 3
+   },
+   "verified": true
+  },
+  {
+   "provider": "zhipu",
+   "model": "glm-4.7-flash",
+   "name": "GLM-4.7-Flash（免费）",
+   "currency": "CNY",
+   "context": 200000,
+   "price": {
+    "input": 0,
+    "cachedInput": 0,
+    "output": 0
+   },
+   "verified": true
+  },
+  {
+   "provider": "qwen",
+   "model": "qwen3.8-max",
+   "name": "通义 qwen3.8-max",
+   "currency": "CNY",
+   "context": 1000000,
+   "price": {
+    "input": 12,
+    "cachedInput": null,
+    "output": 36
+   },
+   "verified": true
+  },
+  {
+   "provider": "qwen",
+   "model": "qwen3.7-max",
+   "name": "通义 qwen3.7-max",
+   "currency": "CNY",
+   "context": 1000000,
+   "price": {
+    "input": 12,
+    "cachedInput": null,
+    "output": 36
+   },
+   "verified": true
+  },
+  {
+   "provider": "qwen",
+   "model": "qwen-max",
+   "name": "通义 qwen-max",
+   "currency": "CNY",
+   "price": {
+    "input": 2.4,
+    "cachedInput": null,
+    "output": 9.6
+   },
+   "note": "只有非思考模式",
+   "verified": true
+  },
+  {
+   "provider": "qwen",
+   "model": "qwen3.7-plus",
+   "name": "通义 qwen3.7-plus",
+   "currency": "CNY",
+   "context": 1000000,
+   "tiers": [
+    {
+     "maxInput": 256000,
+     "input": 2,
+     "cachedInput": null,
+     "output": 8
+    },
+    {
+     "maxInput": null,
+     "input": 6,
+     "cachedInput": null,
+     "output": 24
+    }
+   ],
+   "discount": {
+    "rate": 0.8,
+    "note": "官网标「限时 8 折」，截止日期未写；折扣结束后把 discount 删掉"
+   },
+   "verified": true
+  },
+  {
+   "provider": "qwen",
+   "model": "qwen3.6-plus",
+   "name": "通义 qwen3.6-plus",
+   "currency": "CNY",
+   "context": 1000000,
+   "tiers": [
+    {
+     "maxInput": 256000,
+     "input": 2,
+     "cachedInput": null,
+     "output": 12
+    },
+    {
+     "maxInput": null,
+     "input": 8,
+     "cachedInput": null,
+     "output": 48
+    }
+   ],
+   "verified": true
+  },
+  {
+   "provider": "qwen",
+   "model": "qwen-plus",
+   "name": "通义 qwen-plus",
+   "currency": "CNY",
+   "context": 1000000,
+   "tiers": [
+    {
+     "maxInput": 128000,
+     "input": 0.8,
+     "cachedInput": null,
+     "output": 2,
+     "outputThinking": 8
+    },
+    {
+     "maxInput": 256000,
+     "input": 2.4,
+     "cachedInput": null,
+     "output": 20,
+     "outputThinking": 24
+    },
+    {
+     "maxInput": null,
+     "input": 4.8,
+     "cachedInput": null,
+     "output": 48,
+     "outputThinking": 64
+    }
+   ],
+   "note": "思考模式和非思考模式输出价不同",
+   "verified": true
+  },
+  {
+   "provider": "qwen",
+   "model": "qwen-flash",
+   "name": "通义 qwen-flash",
+   "currency": "CNY",
+   "context": 1000000,
+   "tiers": [
+    {
+     "maxInput": 128000,
+     "input": 0.15,
+     "cachedInput": null,
+     "output": 1.5
+    },
+    {
+     "maxInput": 256000,
+     "input": 0.6,
+     "cachedInput": null,
+     "output": 6
+    },
+    {
+     "maxInput": null,
+     "input": 1.2,
+     "cachedInput": null,
+     "output": 12
+    }
+   ],
+   "verified": true
+  },
+  {
+   "provider": "qwen",
+   "model": "qwen3.7-flash",
+   "name": "通义 qwen3.7-flash",
+   "currency": "CNY",
+   "context": 1000000,
+   "tiers": [
+    {
+     "maxInput": 32000,
+     "input": 0.2,
+     "cachedInput": null,
+     "output": 0.8
+    },
+    {
+     "maxInput": 256000,
+     "input": 0.6,
+     "cachedInput": null,
+     "output": 2.4
+    },
+    {
+     "maxInput": null,
+     "input": 1.2,
+     "cachedInput": null,
+     "output": 4.8
+    }
+   ],
+   "verified": true
+  },
+  {
+   "provider": "doubao",
+   "model": "doubao-seed-2-0-pro",
+   "name": "豆包 Seed 2.0 Pro",
+   "currency": "CNY",
+   "price": {
+    "input": 3.2,
+    "cachedInput": 0.64,
+    "output": 16
+   },
+   "note": "模型 ID 以火山方舟控制台为准",
+   "verified": false
+  },
+  {
+   "provider": "doubao",
+   "model": "doubao-seed-2-0-lite",
+   "name": "豆包 Seed 2.0 Lite",
+   "currency": "CNY",
+   "price": {
+    "input": 0.6,
+    "cachedInput": 0.12,
+    "output": 3.6
+   },
+   "note": "模型 ID 以火山方舟控制台为准",
+   "verified": false
+  }
+ ]
+}

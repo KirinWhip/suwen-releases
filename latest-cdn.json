@@ -1,0 +1,11 @@
+{
+    "version":  "1.1.0",
+    "notes":  "素问 1.1.0（第二期）：花费统计与预算提醒、强度档位、AI 助手（可读写已连接的文件夹，写入/删除/运行命令前都会先问你，能撤销）、文件夹索引与项目记忆、插件（MCP）与技能、@ 提及文件、在线更新（价格表、插件列表、软件本身）。",
+    "pub_date":  "2026-10-17T13:19:23Z",
+    "platforms":  {
+                      "windows-x86_64":  {
+                                             "signature":  "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVUZGxFeVlZUGFnZld0d0hxSWFNSm12UVR6RFo4MVdnRlRETEJ5cllqVE5rcjIvMWFGUG5hOXpXMXNMK3h4Q1JjVzN5ZzdTSkNrYms2MXVpU0U5cVFGOFpaanNEb29qTFFZPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkyMjQzMTYzCWZpbGU657Sg6ZeuXzEuMS4wX3g2NC1zZXR1cC5leGUJdmVyc2lvbjoxLjEuMApMeDJUbnB6aEJPQnVRdjNsVzhQWFd1VUgwZ1QwdThwbW1MbVlDQXh0eC9aeU53NGVsYkZlUEtkbE5kRUpYYk5NVnFkanhUSkk1emswOGprcU01dlNEUT09Cg==",
+                                             "url":  "https://cdn.jsdelivr.net/gh/KirinWhip/suwen-releases@main/installers/Suwen_1.1.0_x64-setup.exe"
+                                         }
+                  }
+}

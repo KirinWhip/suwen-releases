@@ -1,0 +1,118 @@
+{
+  "$comment": "素问 插件市场列表（spec §7.2）。『检查更新』时从线上拉新版覆盖。env 里的值都存进 Windows 凭据管理器；args / url 里的 {{NAME}} 会被替换成对应的值。",
+  "schemaVersion": 1,
+  "updated": "2026-10-17",
+  "plugins": [
+    {
+      "id": "playwright",
+      "name": "浏览器操作",
+      "desc": "让 AI 打开网页、点击、填表、截图（用电脑上的 Edge 浏览器）。微软官方 Playwright 插件。",
+      "transport": "stdio",
+      "command": "npx",
+      "args": ["-y", "@playwright/mcp@latest", "--browser", "msedge"],
+      "env": [],
+      "homepage": "https://github.com/microsoft/playwright-mcp",
+      "needs": "Node.js"
+    },
+    {
+      "id": "amap",
+      "name": "高德地图",
+      "desc": "查地点、路线规划、周边搜索、天气。需要高德开放平台的 Key（免费申请）。",
+      "transport": "stdio",
+      "command": "npx",
+      "args": ["-y", "@amap/amap-maps-mcp-server"],
+      "env": [{ "key": "AMAP_MAPS_API_KEY", "label": "高德 Key", "hint": "在 console.amap.com 创建应用，选「Web 服务」类型的 Key" }],
+      "homepage": "https://lbs.amap.com/api/mcp-server/summary",
+      "needs": "Node.js"
+    },
+    {
+      "id": "baidu-map",
+      "name": "百度地图",
+      "desc": "地点检索、地理编码、路线规划、天气。需要百度地图开放平台的 AK。",
+      "transport": "stdio",
+      "command": "npx",
+      "args": ["-y", "@baidumap/mcp-server-baidu-map"],
+      "env": [{ "key": "BAIDU_MAP_API_KEY", "label": "百度地图 AK", "hint": "在 lbsyun.baidu.com 控制台创建「服务端」应用" }],
+      "homepage": "https://lbsyun.baidu.com/faq/api?title=mcpserver/base",
+      "needs": "Node.js"
+    },
+    {
+      "id": "lark",
+      "name": "飞书文档",
+      "desc": "读写飞书云文档、多维表格、消息。需要在飞书开放平台建一个自建应用。",
+      "transport": "stdio",
+      "command": "npx",
+      "args": ["-y", "@larksuiteoapi/lark-mcp", "mcp", "-a", "{{APP_ID}}", "-s", "{{APP_SECRET}}"],
+      "env": [
+        { "key": "APP_ID", "label": "App ID", "hint": "飞书开放平台 → 开发者后台 → 自建应用 → 凭证与基础信息" },
+        { "key": "APP_SECRET", "label": "App Secret", "hint": "同一页面的 App Secret" }
+      ],
+      "homepage": "https://github.com/larksuite/lark-openapi-mcp",
+      "needs": "Node.js"
+    },
+    {
+      "id": "notion",
+      "name": "Notion",
+      "desc": "搜索、读取、编辑 Notion 页面和数据库。需要 Notion 的集成令牌。",
+      "transport": "stdio",
+      "command": "npx",
+      "args": ["-y", "@notionhq/notion-mcp-server"],
+      "env": [{ "key": "NOTION_TOKEN", "label": "Notion 令牌", "hint": "在 notion.so/profile/integrations 创建内部集成，复制 ntn_ 开头的令牌" }],
+      "homepage": "https://github.com/makenotion/notion-mcp-server",
+      "needs": "Node.js"
+    },
+    {
+      "id": "github",
+      "name": "GitHub",
+      "desc": "查看和管理 GitHub 仓库、议题、拉取请求。GitHub 官方的网址插件，需要个人访问令牌。",
+      "transport": "http",
+      "url": "https://api.githubcopilot.com/mcp/",
+      "env": [{ "key": "TOKEN", "label": "GitHub 令牌", "hint": "github.com/settings/tokens 创建 Fine-grained token" }],
+      "homepage": "https://github.com/github/github-mcp-server"
+    },
+    {
+      "id": "firecrawl",
+      "name": "网页抓取（Firecrawl）",
+      "desc": "抓取整站、提取结构化内容，比内置的「打开网页」更强。需要 Firecrawl 的 API Key（有免费额度）。",
+      "transport": "stdio",
+      "command": "npx",
+      "args": ["-y", "firecrawl-mcp"],
+      "env": [{ "key": "FIRECRAWL_API_KEY", "label": "Firecrawl Key", "hint": "firecrawl.dev 注册后在控制台复制 fc- 开头的 Key" }],
+      "homepage": "https://github.com/firecrawl/firecrawl-mcp-server",
+      "needs": "Node.js"
+    },
+    {
+      "id": "context7",
+      "name": "编程文档查询（Context7）",
+      "desc": "查各种编程库的最新官方文档，写代码时不会用过时的写法。不需要 Key。",
+      "transport": "stdio",
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp"],
+      "env": [],
+      "homepage": "https://github.com/upstash/context7",
+      "needs": "Node.js"
+    },
+    {
+      "id": "sequential-thinking",
+      "name": "分步思考",
+      "desc": "让不会深度思考的模型把复杂问题拆成几步来想。不需要 Key。",
+      "transport": "stdio",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"],
+      "env": [],
+      "homepage": "https://github.com/modelcontextprotocol/servers/tree/main/src/sequentialthinking",
+      "needs": "Node.js"
+    },
+    {
+      "id": "memory",
+      "name": "知识图谱记忆",
+      "desc": "跨聊天记住人物、事物和它们之间的关系（存在电脑本地）。和「项目记忆」不同，它不分项目。不需要 Key。",
+      "transport": "stdio",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-memory"],
+      "env": [],
+      "homepage": "https://github.com/modelcontextprotocol/servers/tree/main/src/memory",
+      "needs": "Node.js"
+    }
+  ]
+}
